@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="ur5e_tutorials" name="wiggle" type="wiggle.py" output="screen"/>
+</launch>
