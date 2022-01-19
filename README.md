@@ -12,13 +12,13 @@ ROS package for Universal Robots UR5e tutorial.
 1. Install ROS driver  
 
 ```
-    $ cd catkin_ws  
-    $ git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver  
-    $ git clone -b calibration_devel https://github.com/fmauch/universal_robot.git src/fmauch_universal_robot  
-    $ rosdep update  
-    $ rosdep install --from-paths src --ignore-src --rosdistro melodic  
-    $ catkin build  
-    $ source ../catkin_ws/devel/setup.bash  
+$ cd catkin_ws  
+$ git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver  
+$ git clone -b calibration_devel https://github.com/fmauch/universal_robot.git src/fmauch_universal_robot  
+$ rosdep update  
+$ rosdep install --from-paths src --ignore-src --rosdistro melodic  
+$ catkin build  
+$ source ../catkin_ws/devel/setup.bash  
 ```
 
 2. Install URCap on a e-series robot by following [here](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md)

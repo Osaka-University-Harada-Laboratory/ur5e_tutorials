@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="ur5e_tutorials" name="pick_and_toss" type="pick_and_toss.py" output="screen"/>
+</launch>

@@ -12,8 +12,8 @@ def go_with_joint_values(mgc, jvs):
     rospy.sleep(rospy.Duration.from_sec(1))
 
 
-def pick_and_place():
-    """Executes pick and place motion."""
+def pick_and_toss():
+    """Executes pick and toss motion."""
     rospy.init_node("moveit_command_sender", disable_signals=True)
     robot = RobotCommander()
     manip = MoveGroupCommander("manipulator")
@@ -33,12 +33,12 @@ def pick_and_place():
                    math.radians(0.0),
                    math.radians(90.0),
                    math.radians(0.0)]
-    upright_inv_jvs = [math.radians(-90.0),
-                       math.radians(-90.0),
-                       math.radians(0.0),
-                       math.radians(0.0),
-                       math.radians(90.0),
-                       math.radians(0.0)]
+    upright_r_jvs = [math.radians(180.0),
+                     math.radians(-90.0),
+                     math.radians(0.0),
+                     math.radians(0.0),
+                     math.radians(90.0),
+                     math.radians(0.0)]
 
     # generate grasp poses
     pregrasp_jvs = [math.radians(90.0),
@@ -55,34 +55,23 @@ def pick_and_place():
                  math.radians(92.0),
                  math.radians(0.0)]
 
-    # way points
-    way1_jvs = [math.radians(90.0),
-                math.radians(-110.0),
-                math.radians(80.0),
-                math.radians(100.0),
-                math.radians(90.0),
-                math.radians(0.0)]
-
-    way2_jvs = way1_jvs
-    way2_jvs[0] = math.radians(-60.0)
-
-    # generate release poses
-    prerelease_jvs = [math.radians(-60.0),
-                      math.radians(-70.0),
-                      math.radians(85.0),
-                      math.radians(77.0),
-                      math.radians(92.0),
+    # generate toss poses
+    toss_start_jvs = [math.radians(180.0),
+                      math.radians(-120.0),
+                      math.radians(-85.0),
+                      math.radians(-95.0),
+                      math.radians(90.0),
                       math.radians(0.0)]
 
-    release_jvs = [math.radians(-60.0),
-                   math.radians(-64.0),
-                   math.radians(95.0),
-                   math.radians(60.0),
-                   math.radians(92.0),
-                   math.radians(0.0)]
+    toss_end_jvs = [math.radians(180.0),
+                    math.radians(-120.0),
+                    math.radians(-25.0),
+                    math.radians(-45.0),
+                    math.radians(90.0),
+                    math.radians(0.0)]
 
-    # execute pick and place motion
-    rospy.loginfo("Start pick and place motion...")
+    # execute pick and toss motion
+    rospy.loginfo("Start pick and toss motion...")
     go_with_joint_values(manip, upright_jvs)
     cnt = 0
     while cnt < 1:
@@ -92,24 +81,21 @@ def pick_and_place():
         go_with_joint_values(manip, grasp_jvs)
         go_with_joint_values(manip, pregrasp_jvs)
         go_with_joint_values(manip, upright_jvs)
-        go_with_joint_values(manip, upright_inv_jvs)
-        go_with_joint_values(manip, way1_jvs)
-        go_with_joint_values(manip, way2_jvs)
-        rospy.loginfo("Prerelease.")
-        go_with_joint_values(manip, prerelease_jvs)
+        go_with_joint_values(manip, upright_r_jvs)
+        rospy.loginfo("Start.")
+        go_with_joint_values(manip, toss_start_jvs)
         rospy.loginfo("Release.")
-        go_with_joint_values(manip, release_jvs)
-        go_with_joint_values(manip, prerelease_jvs)
+        go_with_joint_values(manip, toss_end_jvs)
         cnt += 1
 
     # initialize joints
-    go_with_joint_values(manip, upright_inv_jvs)
+    go_with_joint_values(manip, upright_r_jvs)
     go_with_joint_values(manip, upright_jvs)
     rospy.signal_shutdown("Finished.")
 
 
 if __name__ == '__main__':
     try:
-        pick_and_place()
+        pick_and_toss()
     except rospy.ROSInterruptException:
         pass
