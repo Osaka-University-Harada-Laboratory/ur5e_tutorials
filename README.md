@@ -11,6 +11,7 @@ ROS package for Universal Robots UR5e tutorial.
 
 1. Install ROS driver  
 
+```
     $ cd catkin_ws  
     $ git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver  
     $ git clone -b calibration_devel https://github.com/fmauch/universal_robot.git src/fmauch_universal_robot  
@@ -18,6 +19,7 @@ ROS package for Universal Robots UR5e tutorial.
     $ rosdep install --from-paths src --ignore-src --rosdistro melodic  
     $ catkin build  
     $ source ../catkin_ws/devel/setup.bash  
+```
 
 2. Install URCap on a e-series robot by following [here](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md)
     - Don't forget the last step of starting the External Control program on the teach pendant ([known issue](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/issues/55)).
@@ -27,11 +29,12 @@ ROS package for Universal Robots UR5e tutorial.
 
 1. bringup robots  
     `$ roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX`
-2. launch moveit  
+2. execute external control on the pendant  
+3. launch moveit  
     `$ roslaunch ur5e_moveit_config ur5e_moveit_planning_execution.launch`
-3. launch rviz  
+4. launch rviz  
     `$ roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur5e_moveit_config)/launch/moveit.rviz`
-4. execute tutorial demo
+5. execute tutorial demo  
     `$ roslaunch ur5e_tutorials [demo_name].launch`
 
 ## Author / Contributor

@@ -69,20 +69,15 @@ def wiggle():
         rospy.loginfo("Moving forward...")
         go_with_joint_values(manip, forward_jvs)
         show_joint_values(manip)
-
         rospy.loginfo("Moving backward...")
         go_with_joint_values(manip, backward_jvs)
         show_joint_values(manip)
         cnt += 1
+    
+    # initialize joints
     rospy.loginfo("Moving to middle point...")
     go_with_joint_values(manip, middle_jvs)
     show_joint_values(manip)
-
-    # initialize joints
-    rospy.loginfo("Initializing arm joint values...")
-    manip.set_joint_value_target(manip_initial_joint_values)
-    manip.go()
-    rospy.sleep(rospy.Duration.from_sec(1))
     rospy.signal_shutdown("Finished.")
 
 
