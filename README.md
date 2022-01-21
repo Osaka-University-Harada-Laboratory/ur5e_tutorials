@@ -25,12 +25,7 @@ $ source ../catkin_ws/devel/setup.bash
     - Don't forget the last step of starting the External Control program on the teach pendant ([known issue](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/issues/55)).
     - After [bringup](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/usage_example.md), start the External Control program to establish the connection  
 
-##### Robotiq gripper (option)
-1. Install [tool communication](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/setup_tool_communication.md) on universal robot pendant  
-
-2. Download scripts as `$ git clone git@github.com:TechMagicKK/RobotiqHand.git`
-
-3. Test connections as `$ python test_robotiq.py`
+3. (option to use a gripper) Install [tool communication](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/setup_tool_communication.md) on universal robot pendant  
 
 ## Usage
 
@@ -42,7 +37,8 @@ $ source ../catkin_ws/devel/setup.bash
 4. launch rviz  
     `$ roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur5e_moveit_config)/launch/moveit.rviz`
 5. execute tutorial demo  
-    `$ roslaunch ur5e_tutorials [demo_name].launch`
+    `$ roslaunch ur5e_tutorials wiggle.launch`  
+    `$ roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true`
 
 ## Author / Contributor
 
@@ -50,4 +46,4 @@ $ source ../catkin_ws/devel/setup.bash
 
 ## License
 
-This software is released under the MIT License, see [LICENSE](./LICENSE).
+No license because this repository is still confidential. 
