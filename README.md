@@ -46,4 +46,4 @@ $ source ../catkin_ws/devel/setup.bash
 
 ## License
 
-No license because this repository is still confidential. 
+This software is released under the MIT License, see [LICENSE](./LICENSE).
