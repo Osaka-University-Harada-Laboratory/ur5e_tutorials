@@ -1,3 +1,10 @@
 <launch>
-    <node pkg="ur5e_tutorials" name="pick_and_place" type="pick_and_place.py" output="screen"/>
+    <arg name="use_gripper"     default="false"/>
+    <arg name="ur5e_ip"         default="192.168.0.11"/>
+    <arg name="tool_tcp_port"   default="54321"/>
+    <node pkg="ur5e_tutorials" name="pick_and_place" type="pick_and_place.py" output="screen">
+        <param name="use_gripper" type="bool" value="$(arg use_gripper)"/>
+        <param name="ur5e_ip" value="$(arg ur5e_ip)"/>
+        <param name="tool_tcp_port" type="int" value="$(arg tool_tcp_port)"/>
+    </node>
 </launch>

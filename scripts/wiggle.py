@@ -35,8 +35,8 @@ def wiggle():
     manip_initial_joint_values = manip.get_current_joint_values()
 
     # set maximum velocity and acceleration
-    manip.set_max_velocity_scaling_factor(0.5)
-    manip.set_max_acceleration_scaling_factor(0.5)
+    manip.set_max_velocity_scaling_factor(0.3)
+    manip.set_max_acceleration_scaling_factor(0.3)
 
     # generate joint values
     forward_jvs = [math.radians(90.0),

@@ -40,8 +40,8 @@ def pick_and_toss():
     arm = MoveGroupCommander("manipulator")
 
     ## initial setting for arm
-    arm.set_max_velocity_scaling_factor(0.3)
-    arm.set_max_acceleration_scaling_factor(0.3)
+    arm.set_max_velocity_scaling_factor(0.1)
+    arm.set_max_acceleration_scaling_factor(0.1)
 
     ## initial setting for gripper
     if use_gripper:
@@ -58,20 +58,6 @@ def pick_and_toss():
         gripper.adjust()
         rospy.loginfo("Complete gripper's initialization.")
 
-    # upright pose
-    upright_jvs = [math.radians(90.0),
-                   math.radians(-90.0),
-                   math.radians(0.0),
-                   math.radians(0.0),
-                   math.radians(90.0),
-                   math.radians(0.0)]
-    upright_r_jvs = [math.radians(180.0),
-                     math.radians(-90.0),
-                     math.radians(0.0),
-                     math.radians(0.0),
-                     math.radians(90.0),
-                     math.radians(0.0)]
-
     # generate grasp poses
     pregrasp_jvs = [math.radians(90.0),
                     math.radians(-50.0),
@@ -80,20 +66,20 @@ def pick_and_toss():
                     math.radians(92.0),
                     math.radians(0.0)]
     grasp_jvs = [math.radians(90.0),
-                 math.radians(-27.0),
-                 math.radians(15.0),
-                 math.radians(101.0),
-                 math.radians(92.0),
+                 math.radians(-60.0),
+                 math.radians(70.0),
+                 math.radians(80.0),
+                 math.radians(90.0),
                  math.radians(0.0)]
 
     # generate toss poses
-    toss_start_jvs = [math.radians(180.0),
+    toss_start_jvs = [math.radians(90.0),
                       math.radians(-130.0),
                       math.radians(-100.0),
                       math.radians(-115.0),
                       math.radians(90.0),
                       math.radians(0.0)]
-    toss_end_jvs = [math.radians(180.0),
+    toss_end_jvs = [math.radians(90.0),
                     math.radians(-110.0),
                     math.radians(-15.0),
                     math.radians(-35.0),
@@ -113,13 +99,11 @@ def pick_and_toss():
         is_grasp.put(True)
         rospy.sleep(rospy.Duration.from_sec(1))
         go_with_joint_values(arm, pregrasp_jvs)
-        go_with_joint_values(arm, upright_jvs)
-        go_with_joint_values(arm, upright_r_jvs)
 
         rospy.loginfo("Start tossing.")
         go_with_joint_values(arm, toss_start_jvs)
-        arm.set_max_velocity_scaling_factor(1.0)
-        arm.set_max_acceleration_scaling_factor(1.0)
+        # arm.set_max_velocity_scaling_factor(1.0)
+        # arm.set_max_acceleration_scaling_factor(1.0)
         rospy.sleep(rospy.Duration.from_sec(1))
         is_toss.put(True)
         rospy.loginfo("Release.")
@@ -127,11 +111,9 @@ def pick_and_toss():
         rospy.loginfo("End arm motions thread.")
 
         # initialize joints
-        arm.set_max_velocity_scaling_factor(0.2)
-        arm.set_max_acceleration_scaling_factor(0.2)
+        # arm.set_max_velocity_scaling_factor(0.2)
+        # arm.set_max_acceleration_scaling_factor(0.2)
         rospy.sleep(rospy.Duration.from_sec(1))
-        go_with_joint_values(arm, upright_r_jvs)
-        go_with_joint_values(arm, upright_jvs)
         return True
 
     def gripper_motions(is_grasp, is_toss):
@@ -160,7 +142,6 @@ def pick_and_toss():
         return True
 
     # initializing arm and gripper poses
-    go_with_joint_values(arm, upright_jvs)
     if use_gripper:
         gripper.move(0, 255, 0) # open fast
         (status, position, force) = gripper.wait_move_complete()
