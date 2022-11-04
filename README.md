@@ -38,8 +38,8 @@ $ source ../catkin_ws/devel/setup.bash
     `$ roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur5e_moveit_config)/launch/moveit.rviz`
 5. execute tutorial demo  
     `$ roslaunch ur5e_tutorials wiggle.launch`  
-    `$ roslaunch ur5e_tutorials pick_and_place.launch use_gripper:=true`
-    `$ roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true`
+    `$ roslaunch ur5e_tutorials pick_and_place.launch use_gripper:=true`  
+    `$ roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true`  
 
 ## Author / Contributor
 
