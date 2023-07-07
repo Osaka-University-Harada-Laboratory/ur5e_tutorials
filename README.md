@@ -1,47 +1,73 @@
 # ur5e_tutorials
 
-ROS package for Universal Robots UR5e tutorial.
+[![support level: community](https://img.shields.io/badge/support%20level-community-lightgray.svg)](http://rosindustrial.org/news/2016/10/7/better-supporting-a-growing-ros-industrial-software-platform)
+[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+- ROS package for Universal Robots UR5e tutorial.
+  - [ur5e_tutorials](/catkin_ws/src/ur5e_tutorials): A tutorial package to execute simple demonstrations.
+- Docker for simulation and control environments for Universal Robots UR5e.
 
 ## Dependencies
 
-- [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu)
-- [Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver)
+### Docker build environment
+
+- Ubuntu 18.04 (arch=amd64)
+  - NVIDIA GeForce RTX2080Ti
+  	- NVIDIA Driver 455.23.05
+    - CUDA 11.1
+  - Docker 20.10.12
+  - Docker Compose 1.29.2
+  - NVIDIA Docker 2.10.0
+
+## UR5e with a robotiq gripper
+
+- Ubuntu 18.04
+  - [ROS Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
+  - [UniversalRobots/Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver)
+  - [fmauch/universal_robot](https://github.com/fmauch/universal_robot.git)
+- UniversalRobots UR5e 
+- Robotiq 2F-140
 
 ## Installation
 
-1. Install ROS driver  
-
-```
-cd catkin_ws  
-git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver --depth 1  
-git clone -b calibration_devel https://github.com/fmauch/universal_robot.git src/universal_robot --depth 1  
-git clone https://github.com/Osaka-University-Harada-Laboratory/ur5e_tutorials.git src/ur5e_tutorials --depth 1  
-cp -f ur5e_tutorials/universal_robot/ur5e_moveit_config/config/joint_limits.yaml universal_robot/ur5e_moveit_config/config/  
-rosdep update  
-rosdep install --from-paths src --ignore-src --rosdistro melodic  
-catkin build  
-source ../catkin_ws/devel/setup.bash  
-```
-
-2. Install URCap on a e-series robot by following [here](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md)
+### Driver modules
+1. Install URCap on a e-series robot by following [here](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md).
     - Don't forget the last step of starting the External Control program on the teach pendant ([known issue](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/issues/55)).
-    - After [bringup](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/usage_example.md), start the External Control program to establish the connection  
+    - After [bringup](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/usage_example.md), start the External Control program to establish the connection.  
 
-3. (option to use a gripper) Install [tool communication](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/setup_tool_communication.md) on universal robot pendant  
+2. (option to use a gripper) Install [tool communication](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/setup_tool_communication.md) on universal robot pendant.  
 
-## Usage
+### Docker environment
+```bash
+git clone git@github.com:Osaka-University-Harada-Laboratory/sda5f_tutorials.git --depth 1  
+cd ur5e_tutorials
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
+docker compose up
+```
 
-1. bringup robots  
-    `$ roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX`
-2. execute an external control script on the pendant  
-3. launch moveit  
-    `$ roslaunch ur5e_moveit_config ur5e_moveit_planning_execution.launch`
-4. launch rviz  
-    `$ roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur5e_moveit_config)/launch/moveit.rviz`
-5. execute tutorial demo  
-    `$ roslaunch ur5e_tutorials wiggle.launch`  
-    `$ roslaunch ur5e_tutorials pick_and_place.launch use_gripper:=true`  
-    `$ roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true`  
+## Usage with docker
+
+1. bringup the robot  
+```bash
+xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX"  # e.g., 172.32.1.148
+```
+2. execute the external control script on the pendant  
+3. execute a tutorial script from below options
+
+- Executing a wiggle demonstration in real-world
+```bash
+./utils/ur5e_wiggle.sh
+```
+
+- Executing a pick-and-place demonstration in real-world
+```bash
+./utils/ur5e_pp.sh
+```
+
+- Executing a pick-and-toss demonstration in real-world
+```bash
+./utils/ur5e_pt.sh
+```
 
 ## Author / Contributor
 
@@ -50,4 +76,3 @@ source ../catkin_ws/devel/setup.bash
 ## License
 
 This software is released under the MIT License, see [LICENSE](./LICENSE).
-

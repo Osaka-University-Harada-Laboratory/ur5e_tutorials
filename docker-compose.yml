@@ -1,0 +1,26 @@
+version: "2.3"
+services:
+    ur5e_ws:
+        build:
+            context: .
+            dockerfile: docker/ur5e/Dockerfile
+        container_name: ur5e_container
+        runtime: nvidia
+        environment:
+            - NVIDIA_VISIBLE_DEVICES=all
+            - NVIDIA_DRIVER_CAPABILITIES=all
+            # to transport X11 application window
+            - DISPLAY=$DISPLAY
+            - QT_X11_NO_MITSHM=1
+            - ROS_HOSTNAME=localhost
+        volumes:
+            # for USB devices
+            - /dev:/dev
+            # to tansport X11 application (require xhost local:)
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            # ros catkin dir
+            - ./catkin_ws/src/ur5e_tutorials:/catkin_ws/src/ur5e_tutorials
+        privileged: true
+        tty: true
+        network_mode: host
+        command: bash -c "source /opt/ros/melodic/setup.bash && cd /catkin_ws && rosdep init && rosdep update && rosdep install --from-paths src --ignore-src --rosdistro melodic -y --os=ubuntu:bionic -y && catkin build && bash"
