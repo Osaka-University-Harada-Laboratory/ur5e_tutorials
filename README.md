@@ -54,6 +54,11 @@ xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver
 2. execute the external control script on the pendant  
 3. execute a tutorial script from below options
 
+- Executing the moveit
+```bash
+./utils/ur5e_moveit.sh
+```
+
 - Executing a wiggle demonstration in real-world
 ```bash
 ./utils/ur5e_wiggle.sh
