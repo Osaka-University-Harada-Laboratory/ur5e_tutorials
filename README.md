@@ -2,6 +2,7 @@
 
 [![support level: community](https://img.shields.io/badge/support%20level-community-lightgray.svg)](http://rosindustrial.org/news/2016/10/7/better-supporting-a-growing-ros-industrial-software-platform)
 [![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![repo size](https://img.shields.io/github/repo-size/Osaka-University-Harada-Laboratory/ur5e_tutorials)
 
 - ROS package for Universal Robots UR5e tutorial.
   - [ur5e_tutorials](/catkin_ws/src/ur5e_tutorials): A tutorial package to execute simple demonstrations.
