@@ -11,8 +11,14 @@ from robotiq import robotiq
 
 class ThreadWithReturnValue(Thread):
     """Overwrites Tread class to get return values."""
-    def __init__(self, group=None, target=None, name=None,
-                args=(), kwargs={}, Verbose=None):
+    def __init__(
+            self,
+            group=None,
+            target=None,
+            name=None,
+            args=(),
+            kwargs={},
+            Verbose=None):
         Thread.__init__(self, group, target, name, args, kwargs, Verbose)
         self._return = None
 
@@ -39,11 +45,11 @@ def pick_and_toss():
     robot = RobotCommander()
     arm = MoveGroupCommander("manipulator")
 
-    ## initial setting for arm
+    # initial setting for arm
     arm.set_max_velocity_scaling_factor(0.1)
     arm.set_max_acceleration_scaling_factor(0.1)
 
-    ## initial setting for gripper
+    # initial setting for gripper
     if use_gripper:
         gripper = robotiq()
         rospy.loginfo("Connect/Reset/Activate a connected gripper.")
@@ -125,7 +131,7 @@ def pick_and_toss():
             rospy.sleep(rospy.Duration.from_sec(0.1))
             if is_grasp.get():
                 break
-        gripper.move(255, 100, 50) # close
+        gripper.move(255, 100, 50)  # close
         (status, position, force) = gripper.wait_move_complete()
 
         # open after tossing start
@@ -143,12 +149,12 @@ def pick_and_toss():
 
     # initializing arm and gripper poses
     if use_gripper:
-        gripper.move(0, 255, 0) # open fast
+        gripper.move(0, 255, 0)  # open fast
         (status, position, force) = gripper.wait_move_complete()
 
     is_grasp = queue.Queue()
     is_toss = queue.Queue()
-    
+
     rospy.loginfo("Start pick and toss motion...")
     arm_thread = ThreadWithReturnValue(
         target=arm_motions, args=(is_grasp, is_toss))

@@ -142,4 +142,3 @@ class robotiq():
                 return (1, data[7], data[8])
             if data[3] == 0xf9:
                 return (0, data[7], data[8])
-

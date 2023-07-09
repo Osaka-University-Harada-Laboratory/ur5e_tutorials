@@ -20,11 +20,11 @@ def pick_and_place():
     robot = RobotCommander()
     arm = MoveGroupCommander("manipulator")
 
-    ## initial setting for arm
+    # initial setting for arm
     arm.set_max_velocity_scaling_factor(0.1)
     arm.set_max_acceleration_scaling_factor(0.1)
 
-    ## initial setting for gripper
+    # initial setting for gripper
     if use_gripper:
         gripper = robotiq()
         rospy.loginfo("Connect/Reset/Activate a connected gripper.")
@@ -76,7 +76,7 @@ def pick_and_place():
         rospy.loginfo("Grasp.")
         go_with_joint_values(arm, grasp_jvs)
         if use_gripper:
-            gripper.move(255, 100, 50) # close
+            gripper.move(255, 100, 50)  # close
             (status, position, force) = gripper.wait_move_complete()
         go_with_joint_values(arm, pregrasp_jvs)
         rospy.loginfo("Prerelease.")
@@ -91,7 +91,7 @@ def pick_and_place():
 
     # finalize
     if use_gripper:
-        gripper.move(0, 255, 0) # open fast
+        gripper.move(0, 255, 0)  # open fast
         (status, position, force) = gripper.wait_move_complete()
     rospy.signal_shutdown("Finished.")
 
