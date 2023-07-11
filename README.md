@@ -12,7 +12,7 @@
 
 ### Docker build environment
 
-- Ubuntu 18.04 (arch=amd64)
+- [Ubuntu 18.04 PC](https://ubuntu.com/certified/laptops?q=&limit=20&vendor=Dell&vendor=Lenovo&vendor=HP&release=18.04+LTS)
   - NVIDIA GeForce RTX2080Ti
   	- NVIDIA Driver 455.23.05
     - CUDA 11.1
@@ -22,12 +22,13 @@
 
 ## UR5e with a robotiq gripper
 
-- Ubuntu 18.04
+- [Ubuntu 18.04 PC](https://ubuntu.com/certified/laptops?q=&limit=20&vendor=Dell&vendor=Lenovo&vendor=HP&release=18.04+LTS)
   - [ROS Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
   - [UniversalRobots/Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver)
   - [fmauch/universal_robot](https://github.com/fmauch/universal_robot.git)
-- UniversalRobots UR5e 
-- Robotiq 2F-140
+  - [Byobu](https://www.byobu.org/)
+- [UniversalRobots UR5e](https://www.universal-robots.com/products/ur5-robot/) 
+- [Robotiq 2F-140](https://robotiq.com/products/2f85-140-adaptive-robot-gripper)
 
 ## Installation
 
@@ -42,6 +43,7 @@
 ```bash
 git clone git@github.com:Osaka-University-Harada-Laboratory/sda5f_tutorials.git --depth 1  
 cd ur5e_tutorials
+sudo apt install byobu
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
 docker compose up
 ```
@@ -53,7 +55,7 @@ docker compose up
 xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX"  # e.g., 172.32.1.148
 ```
 2. execute the external control script on the pendant  
-3. execute a tutorial script from below options
+3. execute a tutorial script from the below options
 
 - Executing the moveit
 ```bash
