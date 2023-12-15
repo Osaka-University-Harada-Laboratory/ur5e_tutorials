@@ -41,7 +41,7 @@
 
 ### Docker environment
 ```bash
-git clone git@github.com:Osaka-University-Harada-Laboratory/sda5f_tutorials.git --depth 1  
+git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1  
 cd ur5e_tutorials
 sudo apt install byobu
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
