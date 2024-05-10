@@ -1,3 +1,9 @@
 <launch>
-    <node pkg="ur5e_tutorials" name="wiggle" type="wiggle.py" output="screen"/>
+  <arg name="fake_execution" default="false"/>
+  <group if="$(arg fake_execution)">
+    <node pkg="ur5e_tutorials" name="wiggle_fake_node" type="wiggle_fake.py" output="screen"/>
+  </group>
+  <group unless="$(arg fake_execution)">
+    <node pkg="ur5e_tutorials" name="wiggle_node" type="wiggle.py" output="screen" />
+  </group>
 </launch>

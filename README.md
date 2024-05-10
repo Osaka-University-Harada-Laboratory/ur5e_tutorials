@@ -41,45 +41,105 @@
 
 ### Docker environment
 ```bash
-git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1  
-cd ur5e_tutorials
 sudo apt install byobu
+git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1 && cd ur5e_tutorials
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
-docker compose up
 ```
 
 ## Usage with docker
 
-1. bringup the robot  
+### Using utility scripts
+
+1. Build and run the docker environment
+- Create and start docker containers in the initially opened terminal
+  ```bash
+  docker compose up
+  ```
+
+2. Run a demonstration in the local machine
+  - Execute a below script
+
+### Simulation
+- Visualizing the model
 ```bash
-xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX"  # e.g., 172.32.1.148
+./utils/ur5e_rviz.sh
 ```
-2. execute the external control script on the pendant  
-3. execute a tutorial script from the below options
 
 - Executing the moveit
 ```bash
-./utils/ur5e_moveit.sh
+./utils/ur5e_moveit_sim.sh
 ```
 
-- Executing a wiggle demonstration in real-world
+- Executing a wiggle demonstration
+```bash
+./utils/ur5e_wiggle_fake.sh
+```
+
+- Executing a pick-and-place demonstration
+```bash
+./utils/ur5e_pp_fake.sh
+```
+
+- Executing a pick-and-toss demonstration
+```bash
+./utils/ur5e_pt_fake.sh
+```
+
+### Real robot
+1. Connect to the robot  
+```bash
+xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX"  # e.g., 172.32.1.148
+```
+2. Run the external control script on the pendant  
+3. Execute a below script
+
+- Executing the moveit
+```bash
+./utils/ur5e_moveit_real.sh
+```
+
+- Executing a wiggle demonstration
 ```bash
 ./utils/ur5e_wiggle.sh
 ```
 
-- Executing a pick-and-place demonstration in real-world
+- Executing a pick-and-place demonstration
 ```bash
 ./utils/ur5e_pp.sh
 ```
 
-- Executing a pick-and-toss demonstration in real-world
+- Executing a pick-and-toss demonstration
 ```bash
 ./utils/ur5e_pt.sh
 ```
 
+### Manually execute commands
+
+1. Build and run the docker environment
+- Create and start docker containers in the initially opened terminal
+  ```bash
+  docker compose up
+  ```
+- Execute the container in another terminal
+  ```bash
+  xhost +
+  docker exec -it ur5e_container bash
+  ```
+
+2. Run a demonstration in the container  
+    ```bash
+    byobu
+    # First command
+    # F2 to create a new window
+    # Second command
+    # Ctrl + F6 to close the selected window
+    ```
+
 ## Author / Contributor
 
 [Takuya Kiyokawa](https://takuya-ki.github.io/)
+
+We always welcome collaborators!
 
 ## License
 

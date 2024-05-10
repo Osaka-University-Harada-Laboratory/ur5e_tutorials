@@ -56,19 +56,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN mkdir -p /tmp/
 RUN mkdir -p /catkin_ws/src && \
-	cd /catkin_ws/src && \
-	/bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_init_workspace" && \
-	cd /catkin_ws && \
-	/bin/bash -c "source /opt/ros/melodic/setup.bash; catkin build" && \
-	echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && \
-	echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc && \
-	echo "export ROS_PACKAGE_PATH=\${ROS_PACKAGE_PATH}:/catkin_ws" >> ~/.bashrc && \
-	echo "export ROS_WORKSPACE=/catkin_ws" >> ~/.bashrc
+    cd /catkin_ws/src && \
+    /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_init_workspace" && \
+    cd /catkin_ws && \
+    /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin build" && \
+    echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && \
+    echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+    echo "export ROS_PACKAGE_PATH=\${ROS_PACKAGE_PATH}:/catkin_ws" >> ~/.bashrc && \
+    echo "export ROS_WORKSPACE=/catkin_ws" >> ~/.bashrc
 
 # Universal Robots
 WORKDIR /catkin_ws/src/
-RUN git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git --recursive --depth 1
-RUN git clone -b calibration_devel https://github.com/fmauch/universal_robot.git --recursive --depth 1
+RUN git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git --recursive \
+    && cd Universal_Robots_ROS_Driver \
+    && git reset --hard 189543f18e11d0f1e418e48266c3a30a23e88091
+RUN git clone https://github.com/takuya-ki/universal_robot.git -b calibration_devel --recursive \
+    && cd universal_robot \
+    && git reset --hard 69752c5e9bb61081e5cc783fcc93e768d8f0e4e1
 
 COPY ./catkin_ws/src/ur5e_tutorials /catkin_ws/src/ur5e_tutorials
 RUN cp -f /catkin_ws/src/ur5e_tutorials/universal_robot/ur5e_moveit_config/config/joint_limits.yaml /catkin_ws/src/universal_robot/ur5e_moveit_config/config/  
