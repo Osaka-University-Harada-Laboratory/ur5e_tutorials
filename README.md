@@ -64,26 +64,31 @@ COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --p
 ```bash
 ./utils/ur5e_rviz.sh
 ```
+<img src=image/ur5e_rviz.sh.gif height=200>
 
 - Executing the moveit
 ```bash
 ./utils/ur5e_moveit_sim.sh
 ```
+<img src=image/ur5e_moveit_sim.sh.gif height=200>
 
 - Executing a wiggle demonstration
 ```bash
 ./utils/ur5e_wiggle_fake.sh
 ```
+<img src=image/ur5e_wiggle_fake.sh.gif height=200>
 
 - Executing a pick-and-place demonstration
 ```bash
 ./utils/ur5e_pp_fake.sh
 ```
+<img src=image/ur5e_pp_fake.sh.gif height=200>
 
 - Executing a pick-and-toss demonstration
 ```bash
 ./utils/ur5e_pt_fake.sh
 ```
+<img src=image/ur5e_pt_fake.sh.gif height=200>
 
 ### Real robot
 1. Connect to the robot  
