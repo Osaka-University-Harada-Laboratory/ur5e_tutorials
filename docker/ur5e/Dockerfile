@@ -58,7 +58,7 @@ RUN mkdir -p /tmp/
 RUN mkdir -p /catkin_ws/src && \
     cd /catkin_ws/src && \
     /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_init_workspace" && \
-    cd /catkin_ws && \
+    cd /catkin_ws && rosdep init && \
     /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin build" && \
     echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && \
     echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc && \
