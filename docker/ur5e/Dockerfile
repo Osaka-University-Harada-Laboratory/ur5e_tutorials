@@ -78,19 +78,18 @@ COPY ./catkin_ws/src/ur5e_tutorials /catkin_ws/src/ur5e_tutorials
 RUN cp -f /catkin_ws/src/ur5e_tutorials/universal_robot/ur5e_moveit_config/config/joint_limits.yaml /catkin_ws/src/universal_robot/ur5e_moveit_config/config/  
 
 # Generates bash commands
+# real robot
 RUN echo "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=192.168.0.11" >> ~/.bash_history
-
-## moveit for real-world executions
 RUN echo "roslaunch ur5e_moveit_config ur5e_moveit_planning_execution.launch sim:=false" >> ~/.bash_history
 RUN echo "roslaunch ur5e_moveit_config moveit_rviz.launch rviz_config:=/catkin_ws/src/universal_robot/ur5e_moveit_config/launch/moveit.rviz" >> ~/.bash_history
-
-## ur5e_wiggle.sh (after above moveit commands then execute below)
-RUN echo "roslaunch ur5e_tutorials wiggle.launch" >> ~/.bash_history
-
-## ur5e_pp.sh
-RUN echo "roslaunch ur5e_tutorials pick_and_place.launch use_gripper:=true" >> ~/.bash_history
-
-## ur5e_pt.sh
-RUN echo "roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials wiggle.launch fake_execution=false" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials pick_and_place.launch use_gripper:=true fake_execution=false" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials pick_and_toss.launch use_gripper:=true fake_execution=false" >> ~/.bash_history
+# simulation
+RUN echo "roslaunch ur_description view_ur5e.launch" >> ~/.bash_history
+RUN echo "roslaunch ur5e_moveit_config demo.launch" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials wiggle.launch fake_execution=true" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials pick_and_place.launch fake_execution=true" >> ~/.bash_history
+RUN echo "roslaunch ur5e_tutorials pick_and_toss.launch fake_execution=true" >> ~/.bash_history
 
 WORKDIR /catkin_ws/src/
