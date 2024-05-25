@@ -64,10 +64,10 @@
   docker compose up
   ```
 
-2. Run a demonstration in the local machine
-  - Execute a below script
-
 ### Simulation
+
+2. Run a demonstration on the host machine  
+
 - Visualizing the model
   ```bash
   ./utils/ur5e_rviz.sh
@@ -99,12 +99,13 @@
   <img src=image/ur5e_pt_fake.sh.gif height=200>
 
 ### Real robot
-1. Connect to the robot  
+
+2. Connect to the robot  
   ```bash
   xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148"
   ```
-2. Run the external control script on the pendant  
-3. Execute a below script
+3. Run the external control script on the pendant  
+4. Run a demonstration on the host machine  
 
 - Executing the moveit
   ```bash
