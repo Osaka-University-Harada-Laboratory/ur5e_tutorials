@@ -32,19 +32,27 @@
 
 ## Installation
 
-### Driver modules
+### Teach pendant
+
 1. Install URCap on a e-series robot by following [here](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_e_series.md).
     - Don't forget the last step of starting the External Control program on the teach pendant ([known issue](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/issues/55)).
     - After [bringup](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/usage_example.md), start the External Control program to establish the connection.  
 
 2. (option to use a gripper) Install [tool communication](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/setup_tool_communication.md) on universal robot pendant.  
 
-### Docker environment
-```bash
-sudo apt install byobu
-git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1 && cd ur5e_tutorials
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
-```
+### Host machine
+1. Connect an Ethernet cable between the host computer and the Ethernet port of UR5e's controller
+2. Set the network configuration as below  
+    <img src=image/network.png width=280>  
+    - The ros node expects to reach the robot at the IP `172.32.1.148`. You can change the IP with pendant  
+    - This IP is set to the `robot_ip` argument as below  
+      ```bash
+      roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148
+      ```
+3. Build the docker environment as below  
+    ```bash
+    sudo apt install byobu && git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1 && cd ur5e_tutorials && COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
+    ```
 
 ## Usage with docker
 
@@ -61,62 +69,62 @@ COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --p
 
 ### Simulation
 - Visualizing the model
-```bash
-./utils/ur5e_rviz.sh
-```
-<img src=image/ur5e_rviz.sh.gif height=200>
+  ```bash
+  ./utils/ur5e_rviz.sh
+  ```
+  <img src=image/ur5e_rviz.sh.gif height=200>
 
 - Executing the moveit
-```bash
-./utils/ur5e_moveit_sim.sh
-```
-<img src=image/ur5e_moveit_sim.sh.gif height=200>
+  ```bash
+  ./utils/ur5e_moveit_sim.sh
+  ```
+  <img src=image/ur5e_moveit_sim.sh.gif height=200>
 
 - Executing a wiggle demonstration
-```bash
-./utils/ur5e_wiggle_fake.sh
-```
-<img src=image/ur5e_wiggle_fake.sh.gif height=200>
+  ```bash
+  ./utils/ur5e_wiggle_fake.sh
+  ```
+  <img src=image/ur5e_wiggle_fake.sh.gif height=200>
 
 - Executing a pick-and-place demonstration
-```bash
-./utils/ur5e_pp_fake.sh
-```
-<img src=image/ur5e_pp_fake.sh.gif height=200>
+  ```bash
+  ./utils/ur5e_pp_fake.sh
+  ```
+  <img src=image/ur5e_pp_fake.sh.gif height=200>
 
 - Executing a pick-and-toss demonstration
-```bash
-./utils/ur5e_pt_fake.sh
-```
-<img src=image/ur5e_pt_fake.sh.gif height=200>
+  ```bash
+  ./utils/ur5e_pt_fake.sh
+  ```
+  <img src=image/ur5e_pt_fake.sh.gif height=200>
 
 ### Real robot
 1. Connect to the robot  
-```bash
-xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=XX.XX.XX.XX"  # e.g., 172.32.1.148
-```
+  ```bash
+  xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148"
+  ```
 2. Run the external control script on the pendant  
 3. Execute a below script
 
 - Executing the moveit
-```bash
-./utils/ur5e_moveit_real.sh
-```
+  ```bash
+  ./utils/ur5e_moveit_real.sh
+  ```
 
 - Executing a wiggle demonstration
-```bash
-./utils/ur5e_wiggle.sh
-```
+  ```bash
+  ./utils/ur5e_wiggle.sh
+  ```
 
 - Executing a pick-and-place demonstration
-```bash
-./utils/ur5e_pp.sh
-```
+  ```bash
+  ./utils/ur5e_pp.sh
+  ```
 
 - Executing a pick-and-toss demonstration
-```bash
-./utils/ur5e_pt.sh
-```
+  ```bash
+  ./utils/ur5e_pt.sh
+  ```
 
 ### Manually execute commands
 
@@ -127,18 +135,15 @@ xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver
   ```
 - Execute the container in another terminal
   ```bash
-  xhost +
-  docker exec -it ur5e_container bash
+  xhost + && docker exec -it ur5e_container bash
   ```
 
 2. Run a demonstration in the container  
     ```bash
     byobu
-    # First command
-    # F2 to create a new window
-    # Second command
-    # Ctrl + F6 to close the selected window
     ```
+    - First command & F2 to create a new window & Second command ...
+    - Ctrl + F6 to close the selected window
 
 ## Author / Contributor
 
