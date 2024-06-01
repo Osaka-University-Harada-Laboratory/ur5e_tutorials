@@ -20,7 +20,7 @@
   - Docker Compose 1.29.2
   - NVIDIA Docker 2.10.0
 
-## UR5e with a robotiq gripper
+### UR5e with a robotiq gripper
 
 - [Ubuntu 18.04 PC](https://ubuntu.com/certified/laptops?q=&limit=20&vendor=Dell&vendor=Lenovo&vendor=HP&release=18.04+LTS)
   - [ROS Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
