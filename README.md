@@ -20,7 +20,7 @@
   - Docker Compose 1.29.2
   - NVIDIA Docker 2.10.0
 
-## UR5e with a robotiq gripper
+### UR5e with a robotiq gripper
 
 - [Ubuntu 18.04 PC](https://ubuntu.com/certified/laptops?q=&limit=20&vendor=Dell&vendor=Lenovo&vendor=HP&release=18.04+LTS)
   - [ROS Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu)
@@ -46,9 +46,9 @@
     <img src=image/network.png width=280>  
     - The ros node expects to reach the robot at the IP `172.32.1.148`. You can change the IP with pendant  
     - This IP is set to the `robot_ip` argument as below  
-      ```bash
-      roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148
-      ```
+        ```bash
+        roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148
+        ```
 3. Build the docker environment as below  
     ```bash
     sudo apt install byobu && git clone git@github.com:Osaka-University-Harada-Laboratory/ur5e_tutorials.git --depth 1 && cd ur5e_tutorials && COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build --no-cache --parallel  
@@ -59,85 +59,86 @@
 ### Using utility scripts
 
 1. Build and run the docker environment
-- Create and start docker containers in the initially opened terminal
-  ```bash
-  docker compose up
-  ```
+   - Create and start docker containers in the initially opened terminal
+        ```bash
+        docker compose up
+        ```
 
 ### Simulation
 
 2. Run a demonstration on the host machine  
 
-- Visualizing the model
-  ```bash
-  ./utils/ur5e_rviz.sh
-  ```
-  <img src=image/ur5e_rviz.sh.gif height=200>
+   - Visualizing the model
+        ```bash
+        ./utils/ur5e_rviz.sh
+        ```
+        <img src=image/ur5e_rviz.sh.gif height=200>
 
-- Executing the moveit
-  ```bash
-  ./utils/ur5e_moveit_sim.sh
-  ```
-  <img src=image/ur5e_moveit_sim.sh.gif height=200>
+   - Executing the moveit
+        ```bash
+        ./utils/ur5e_moveit_sim.sh
+        ```
+        <img src=image/ur5e_moveit_sim.sh.gif height=200>
 
-- Executing a wiggle demonstration
-  ```bash
-  ./utils/ur5e_wiggle_fake.sh
-  ```
-  <img src=image/ur5e_wiggle_fake.sh.gif height=200>
+   - Executing a wiggle demonstration
+        ```bash
+        ./utils/ur5e_wiggle_fake.sh
+        ```
+        <img src=image/ur5e_wiggle_fake.sh.gif height=200>
 
-- Executing a pick-and-place demonstration
-  ```bash
-  ./utils/ur5e_pp_fake.sh
-  ```
-  <img src=image/ur5e_pp_fake.sh.gif height=200>
+   - Executing a pick-and-place demonstration
+        ```bash
+        ./utils/ur5e_pp_fake.sh
+        ```
+        <img src=image/ur5e_pp_fake.sh.gif height=200>
 
-- Executing a pick-and-toss demonstration
-  ```bash
-  ./utils/ur5e_pt_fake.sh
-  ```
-  <img src=image/ur5e_pt_fake.sh.gif height=200>
+   - Executing a pick-and-toss demonstration
+        ```bash
+        ./utils/ur5e_pt_fake.sh
+        ```
+        <img src=image/ur5e_pt_fake.sh.gif height=200>
 
 ### Real robot
 
 2. Connect to the robot  
-  ```bash
-  xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148"
-  ```
+    ```bash
+    xhost + && docker exec -it ur5e_container bash -it -c "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=172.32.1.148"
+    ```
 3. Run the external control script on the pendant  
+
 4. Run a demonstration on the host machine  
 
-- Executing the moveit
-  ```bash
-  ./utils/ur5e_moveit_real.sh
-  ```
+   - Executing the moveit
+        ```bash
+        ./utils/ur5e_moveit_real.sh
+        ```
 
-- Executing a wiggle demonstration
-  ```bash
-  ./utils/ur5e_wiggle.sh
-  ```
+   - Executing a wiggle demonstration
+        ```bash
+        ./utils/ur5e_wiggle.sh
+        ```
 
-- Executing a pick-and-place demonstration
-  ```bash
-  ./utils/ur5e_pp.sh
-  ```
+   - Executing a pick-and-place demonstration
+        ```bash
+        ./utils/ur5e_pp.sh
+        ```
 
-- Executing a pick-and-toss demonstration
-  ```bash
-  ./utils/ur5e_pt.sh
-  ```
+   - Executing a pick-and-toss demonstration
+        ```bash
+        ./utils/ur5e_pt.sh
+        ```
 
 ### Manually execute commands
 
 1. Build and run the docker environment
-- Create and start docker containers in the initially opened terminal
-  ```bash
-  docker compose up
-  ```
-- Execute the container in another terminal
-  ```bash
-  xhost + && docker exec -it ur5e_container bash
-  ```
+   - Create and start docker containers in the initially opened terminal
+        ```bash
+        docker compose up
+        ```
+   - Execute the container in another terminal
+        ```bash
+        xhost + && docker exec -it ur5e_container bash
+        ```
 
 2. Run a demonstration in the container  
     ```bash

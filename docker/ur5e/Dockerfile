@@ -1,11 +1,14 @@
 FROM nvidia/opengl:1.2-glvnd-devel-ubuntu18.04
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl lsb-release wget gnupg
+# setting environmental variables
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt update && apt install -y --no-install-recommends curl lsb-release wget gnupg
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add -
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends tzdata
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt update && apt install -y --no-install-recommends tzdata
+RUN apt update && apt install -y --no-install-recommends \
     ros-melodic-desktop-full \
     ros-melodic-gazebo-ros-pkgs \
     ros-melodic-gazebo-ros-control \
@@ -40,26 +43,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-melodic-genpy \
     ros-melodic-industrial-core \
     ros-melodic-roslint \
-    socat \
-    libcanberra-gtk* \
     python-catkin-tools \
+    python-setuptools \
+    libcanberra-gtk* \
     build-essential \
     python-rosdep \
-    byobu \
     libudev-dev \
     python-pip \
-    python-setuptools \
+    net-tools \
+    socat \
+    byobu \
+    dbus \
     git \
     vim \
-    net-tools \
-    dbus
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /tmp/
 RUN mkdir -p /catkin_ws/src && \
-    cd /catkin_ws/src && \
-    /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin_init_workspace" && \
-    cd /catkin_ws && rosdep init && \
-    /bin/bash -c "source /opt/ros/melodic/setup.bash; catkin build" && \
+    /bin/bash -c "cd /catkin_ws/src && source /opt/ros/melodic/setup.bash && catkin_init_workspace" && \
+    /bin/bash -c "cd /catkin_ws && source /opt/ros/melodic/setup.bash && catkin build" && \
     echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && \
     echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc && \
     echo "export ROS_PACKAGE_PATH=\${ROS_PACKAGE_PATH}:/catkin_ws" >> ~/.bashrc && \
@@ -78,6 +79,7 @@ COPY ./catkin_ws/src/ur5e_tutorials /catkin_ws/src/ur5e_tutorials
 RUN cp -f /catkin_ws/src/ur5e_tutorials/universal_robot/ur5e_moveit_config/config/joint_limits.yaml /catkin_ws/src/universal_robot/ur5e_moveit_config/config/  
 
 # Generates bash commands
+WORKDIR /catkin_ws/src/
 # real robot
 RUN echo "roslaunch ur_robot_driver ur5e_bringup.launch robot_ip:=192.168.0.11" >> ~/.bash_history
 RUN echo "roslaunch ur5e_moveit_config ur5e_moveit_planning_execution.launch sim:=false" >> ~/.bash_history
@@ -91,5 +93,3 @@ RUN echo "roslaunch ur5e_moveit_config demo.launch" >> ~/.bash_history
 RUN echo "roslaunch ur5e_tutorials wiggle.launch fake_execution=true" >> ~/.bash_history
 RUN echo "roslaunch ur5e_tutorials pick_and_place.launch fake_execution=true" >> ~/.bash_history
 RUN echo "roslaunch ur5e_tutorials pick_and_toss.launch fake_execution=true" >> ~/.bash_history
-
-WORKDIR /catkin_ws/src/
