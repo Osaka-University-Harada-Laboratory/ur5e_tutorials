@@ -1,2 +1,7 @@
 .dockerignore
 .git
+.gitignore
+.claude/
+.vscode/
+image/
+utils/

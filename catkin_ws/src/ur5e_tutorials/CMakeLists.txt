@@ -28,5 +28,8 @@ catkin_install_python(
     PROGRAMS
     scripts/wiggle.py
     scripts/pick_and_place.py
+    scripts/pick_and_place_fake.py
     scripts/pick_and_toss.py
+    scripts/pick_and_toss_fake.py
+    scripts/robotiq.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

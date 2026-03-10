@@ -1,2 +1,4 @@
 *.pyc
-*.vscode
+.vscode/
+.claude/
+CLAUDE.md

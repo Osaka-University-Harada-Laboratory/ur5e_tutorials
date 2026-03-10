@@ -6,8 +6,6 @@ import Queue as queue
 from threading import Thread
 from moveit_commander import RobotCommander, MoveGroupCommander
 
-from robotiq import robotiq
-
 
 class ThreadWithReturnValue(Thread):
     """Overwrites Tread class to get return values."""
@@ -105,26 +103,6 @@ def pick_and_toss():
         # arm.set_max_velocity_scaling_factor(0.2)
         # arm.set_max_acceleration_scaling_factor(0.2)
         rospy.sleep(rospy.Duration.from_sec(1))
-        return True
-
-    def gripper_motions(is_grasp, is_toss):
-        """Defines gripper motions in a thread."""
-        rospy.loginfo("Start gripper motions thread.")
-
-        # close at pregrasp
-        while True:
-            rospy.sleep(rospy.Duration.from_sec(0.1))
-            if is_grasp.get():
-                break
-
-        # open after tossing start
-        while True:
-            rospy.sleep(rospy.Duration.from_sec(0.1))
-            if is_toss.get():
-                break
-        rospy.sleep(rospy.Duration.from_sec(0.3))
-
-        rospy.loginfo("End gripper motions thread.")
         return True
 
     # initializing arm and gripper poses
